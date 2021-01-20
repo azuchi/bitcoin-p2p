@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'bitcoin'
+require 'bitcoin/p2p'
+require 'thor'
+require 'thor_repl'
+
+module Bitcoin
+  module P2P
+    class CLI < Thor
+
+      class_option :network, aliases: '-n', default: :mainnet
+      class_option :host, aliases: '-h'
+
+      desc 'connect', 'connect to bitcoin node.'
+      def connect
+        begin
+          Bitcoin.chain_params = options['network'].to_sym
+          Bitcoin::P2P::Handler.setup(options['host'], options['network'])
+        rescue Exception => e
+          puts e
+        end
+      end
+
+      def self.exit_on_failure?
+        true
+      end
+    end
+  end
+end
+
+Bitcoin::P2P::CLI.start(ARGV)
