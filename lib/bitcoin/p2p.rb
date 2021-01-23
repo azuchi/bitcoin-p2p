@@ -5,7 +5,7 @@ module Bitcoin
     class Error < StandardError; end
 
     autoload :Handler, 'bitcoin/p2p/handler'
-    autoload :CLI, 'bitcoin/p2p/cli'
+    autoload :Option, 'bitcoin/p2p/option'
 
   end
 end

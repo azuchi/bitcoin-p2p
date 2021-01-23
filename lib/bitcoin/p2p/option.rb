@@ -1,7 +1,7 @@
 module Bitcoin
   module P2P
 
-    class CLI
+    class Option
 
       attr_accessor :host
       attr_accessor :network
