@@ -86,6 +86,10 @@ module Bitcoin
         end
       end
 
+      def unbind
+        puts "\n => connection is closed. please stop."
+      end
+
     end
 
   end

@@ -13,16 +13,6 @@ cli.parse
 Bitcoin.chain_params = cli.network
 port = Bitcoin.chain_params.default_port
 
-@console = Thread.new do
-  IRB.start
-end
-
-@node = Thread.new do
-  EM.run do
-    @conn = EM.connect(cli.host, port, Bitcoin::P2P::Handler)
-  end
-end
-
 def send_message(message)
   msg = message.is_a?(Bitcoin::Message::Base) ? message.to_pkt : message.htb
   puts " => send message data: #{msg.bth}"
@@ -32,6 +22,16 @@ end
 def stop
   @node.exit
   @console.exit
+end
+
+@console = Thread.new do
+  IRB.start
+end
+
+@node = Thread.new do
+  EM.run do
+    @conn = EM.connect(cli.host, port, Bitcoin::P2P::Handler)
+  end
 end
 
 @node.join
