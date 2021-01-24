@@ -21,7 +21,8 @@ module Bitcoin
         command, payload, rest = parse_header
         return unless command
         msg = decode_msg(command, payload)
-        print "\n => receive #{command}. #{msg.to_h}"
+        puts
+        puts " => receive #{command}. #{msg.to_h}"
         @message = ""
         parse(rest) if rest && rest.bytesize > 0
       end
