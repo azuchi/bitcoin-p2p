@@ -3,8 +3,6 @@ module Bitcoin
 
     module Handler
 
-      MSG_PREFIX = '>'
-
       def post_init
         puts "> connected! You can send version message."
       end
@@ -23,8 +21,7 @@ module Bitcoin
         command, payload, rest = parse_header
         return unless command
         msg = decode_msg(command, payload)
-        puts
-        puts "#{MSG_PREFIX} receive #{command}. payload: #{msg.to_h}"
+        print "\n => receive #{command}. #{msg.to_h}"
         @message = ""
         parse(rest) if rest && rest.bytesize > 0
       end

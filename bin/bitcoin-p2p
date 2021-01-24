@@ -25,9 +25,8 @@ end
 
 def send_message(message)
   msg = message.is_a?(Bitcoin::Message::Base) ? message.to_pkt : message.htb
-  puts "> send message data: #{msg.bth}"
+  puts " => send message data: #{msg.bth}"
   @conn.send_data(msg)
-  nil
 end
 
 def stop
