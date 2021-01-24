@@ -1,8 +1,6 @@
-# Bitcoin::P2p
+# Bitcoin P2P message REPL tool
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bitcoin/p2p`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`bitcoin-p2p` is an irb-based tool for interactively exchanging P2P messages with Bitcoin nodes.
 
 ## Installation
 
@@ -22,18 +20,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Start `bitcoin-p2p` by specifying the address and network of the node to connect to.
 
-## Development
+    $ bitcoin-p2p -h localhost -n signet
+    > connected! You can send version message.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Once connected, you can use the [bitcoinrb message class](https://github.com/chaintope/bitcoinrb/wiki/P2P-Message) 
+to construct a P2P message and use the `send_message` method to send that message to the other party.
+For example, the handshake can be done as follows:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    > ver = Bitcoin::Message::Vresion.new
+    => #<Bitcoin::Message::Version:0x00005590317410f0 @version=70013, @services=8, @timestamp=1611462693, @local_addr=#<Bitcoin::Message::NetworkAddr:0x0000559031738ae0 @time=1611462693, @ip_addr=#<IPAddr: IPv4:127.0.0.1/255.255.255.255>, @port=3...
+    > send_message(ver)
+    => send message data: 0a03cf4076657273696f6e00000000006700000093cb71427d110100080000000000000025f80c6000000000080000000000000000000000000000000000ffff7f00000195bd080000000000000000000000000000000000ffff7f00000195bd519f0f6807576b1c112f626974636f696e72623a302e362e302f0000000000
+    ...
+    =>  receive version. payload: {"version"=>70016, "services"=>1097, "timestamp"=>1611462696, "local_addr"=>{"time"=>nil, "ip_addr"=>#<IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0000/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff>, "port"=>0, "services"=>0}, "remote_addr"=>{"time"=>nil, "ip_addr"=>#<IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0000/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff>, "port"=>0, "services"=>1033}, "nonce"=>5555482496462444166, "user_agent"=>"/Satoshi:0.21.0/", "start_height"=>21843, "relay"=>true}
+    > ack Bitcoin::Message::VerAck.new
+    => #<Bitcoin::Message::VerAck:0x00005590316342c0> 
+    > send_message(ack)
+    => send message data: 0a03cf4076657261636b000000000000000000005df6e0e2
+
+Note, You will be able to send other messages, but if the message you send does not comply with the specifications or 
+violates the policy of the other party, you will be disconnected. 
+In this case, a message will be displayed on the console saying `=> connection is closed. Please stop.`, so end with `stop`.
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bitcoin-p2p. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/bitcoin-p2p/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
