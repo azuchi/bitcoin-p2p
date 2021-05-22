@@ -35,7 +35,7 @@ For example, the handshake can be done as follows:
     => send message data: 0a03cf4076657273696f6e00000000006700000093cb71427d110100080000000000000025f80c6000000000080000000000000000000000000000000000ffff7f00000195bd080000000000000000000000000000000000ffff7f00000195bd519f0f6807576b1c112f626974636f696e72623a302e362e302f0000000000
     ...
     =>  receive version. payload: {"version"=>70016, "services"=>1097, "timestamp"=>1611462696, "local_addr"=>{"time"=>nil, "ip_addr"=>#<IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0000/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff>, "port"=>0, "services"=>0}, "remote_addr"=>{"time"=>nil, "ip_addr"=>#<IPAddr: IPv6:0000:0000:0000:0000:0000:0000:0000:0000/ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff>, "port"=>0, "services"=>1033}, "nonce"=>5555482496462444166, "user_agent"=>"/Satoshi:0.21.0/", "start_height"=>21843, "relay"=>true}
-    > ack Bitcoin::Message::VerAck.new
+    > ack = Bitcoin::Message::VerAck.new
     => #<Bitcoin::Message::VerAck:0x00005590316342c0> 
     > send_message(ack)
     => send message data: 0a03cf4076657261636b000000000000000000005df6e0e2
